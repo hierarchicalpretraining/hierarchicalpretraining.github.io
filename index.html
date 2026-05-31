@@ -1,13 +1,576 @@
-cat > index.html <<'EOF'
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8">
-  <title>Core-skill Hierarchical Pretraining</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChiP</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="./static/css/academicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
+
 <body>
-  <h1>Core-skill Hierarchical Pretraining</h1>
-  <p>Project page for anonymous CoRL submission.</p>
-</body>
+
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+
+
+                        <h1 class="title is-1 publication-title">
+                          Hierarchical Pretraining on Core Manipulation Skills Enables Effective Fine-tuning
+                        </h1>
+                        <h3 class="title is-4 conference-authors">In submission
+                    </h3>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding-top: 0; padding-bottom: 1.5rem;">
+        <div class="container is-fluid" style="padding-left: 1.5rem; padding-right: 1.5rem;">
+            <div class="columns is-centered is-vcentered is-gapless">
+                <div class="column" style="padding-left: 0.5rem; padding-right: 0.5rem;">
+                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+                            <source src="videos/zero-shot-all.mp4" type="video/mp4">
+                        </video>
+                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+                            ChiP evaluated zero-shot on unseen objects on the pretraining tasks
+                        </p>
+                    </div>
+                </div>
+                <div class="column" style="padding-left: 0.5rem; padding-right: 0.5rem;">
+                    <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+                        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+                            <source src="videos/fine-tune-compressed.mp4" type="video/mp4">
+                        </video>
+                        <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+                            ChiP fine-tuned on downstream tasks
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p style="font-size: 125%">
+                          Pretraining has become a dominant paradigm in learning robotic manipulation policies: 
+                          models are first pretrained on broad datasets and then fine-tuned on downstream tasks with limited task-specific data. 
+                          While common practice in pretraining favors large, flat end-to-end policies trained on broad real-world datasets with diverse tasks, 
+                          we propose an alternative approach. 
+                          We show that effective manipulation pretraining can be achieved through using a structured hierarchical policy representation, 
+                          paired with a compact set of core manipulation skills procedurally generated in simulation. 
+                          The hierarchical policy consists of a high-level policy that predicts subgoal end-effector poses, 
+                          and a low-level policy that predicts end-effector movements conditioned on these subgoals. 
+                          We find that the task-relevant goal-following behavior learned by the low-level policy provides a transferable prior for downstream fine-tuning. 
+                          We further show that pretraining with this hierarchical representation on a set of core skills such as grasping, placing, 
+                          and articulated-object interaction can produce a strong manipulation prior, 
+                          while allowing demonstrations to be generated efficiently in simulation without costly real-world data collection. 
+                          We term our system CHiP, Core-skill Hierarchical Pretraining. 
+                          Experiments in simulation and the real world show that CHiP achieves stronger downstream fine-tuning performance 
+                          than flat policy architectures, 
+                          and that simulation-generated core-skill pretraining performs competitively with DROID pretraining 
+                          under the same hierarchical policy representation.
+<br>
+<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="rows">
+                <div class="rows is-centered">
+                    <div class="row is-full-width">
+                        <h2 class="title is-3"><span class="dvima">CHiP Overview</span></h2>
+                          <img src="figs/pull_cropped.png" class="interpolation-image" alt="CHiP system overview"
+                              style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" />
+                            
+                        <br>
+
+                        <p style="font-size: 125%">
+                          Overview of CHiP: Core-skill Hierarchical Pretraining. 
+                          We propose a new perspective for manipulation policy pretraining. 
+                          For policy representation, we propose to use a hierarchical policy representation instead of a flat end-to-end policy; 
+                          for pretraining tasks, we propose to pretrain on a compact set of core manipulation skills. 
+                          We show that these decisions enable CHiP to not only achieve strong zero-shot performance on the pretraining tasks, 
+                          but also enable effective downstream fine-tuning on new tasks and robot embodiments that are not seen during pretraining. 
+                        <br>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+   
+
+    <section class="section">
+      <div class="container is-max-widescreen">
+    
+    
+    <div class="rows is-centered ">
+      <div class="row is-full-width">
+          <h2 class="title is-3"><span class="dvima">Real-world Fine-tuning Tasks </span></h2>
+      </div>
+  </div>
+  <br>
+  <p style="font-size: 125%">
+  We fine-tune the CHiP model, trained on the simulation generated core skills with a 7DoF Franka Arm, on the following 2 long-horizon tasks using 
+  a 6DoF Aloha ViperX Arm: Folding an onesie, and Table Bussing. We use 33 fine-tuning demonstrations for onesie folding, 
+  and 23 fine-tuning demonstrations for table bussing, to test if CHiP supports sample-efficient fine-tuning. 
+  
+  </p>
+  <br>
+  <br>
+  
+    <div class="columns is-centered">
+        <div class="column">
+          <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+            <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+              <source src="videos/ours_brown_cut.mp4" type="video/mp4">
+            </video>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+              Onesie folding (brown onesie)
+            </p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+            <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+              <source src="videos/ours_white_working_1.mp4" type="video/mp4">
+            </video>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+              Onesie folding (white onesie)
+            </p>
+          </div>
+        </div>
+    </div>
+    <br>
+    <div class="columns is-centered">
+        <div class="column">
+          <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+            <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+              <source src="videos/pap_bowl_down_rotated_ccw.mp4" type="video/mp4">
+            </video>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+              Table bussing (bowl at the bottom of the table)
+            </p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+            <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+              <source src="videos/pap_bowl_middle_rotated_ccw.mp4" type="video/mp4">
+            </video>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+              Table bussing (bowl at the middle of the table)
+            </p>
+          </div>
+        </div>
+    </div>
+    <br>
+    <div class="columns is-centered">
+        <div class="column">
+          <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+            <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+              <source src="videos/onesie_10_folds.mp4" type="video/mp4">
+            </video>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+              Uncut 10 evaluations of onesie folding (5 folds success rate: 0.6)
+            </p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+            <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+              <source src="videos/pap3_8x_ccw_compressed.mp4" type="video/mp4">
+            </video>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 130%; width: 100%;">
+              Uncut 10 evaluations of table bussing (full task sucess rates: 0.6)
+            </p>
+          </div>
+        </div>
+    </div>
+          
+    </div>
+  </section>
+    
+
+  <section class="section">
+    <div class="container is-max-widescreen">
+
+  <div class="rows is-centered ">
+    <div class="row is-full-width">
+        <h2 class="title is-3"><span class="dvima">Real-world Zero-shot Evaluations on Unseen Objects</span></h2>
+    </div>
+</div>
+<br>
+<p style="font-size: 125%">
+Zero-shot evaluations of CHiP on unseen objects for the pretraining tasks in the real world: opening/closing articulated objects,
+grasping objects in clutter, and pick and place objects. None of the objects are seen during pretraining in simulation.
+</p>
+<br>
+<br>
+
+  <div class="columns is-centered is-multiline">
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/open-knob drawer.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Open knob drawer
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/open-laptop.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Open laptop
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/open-microwave.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Open microwave
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/open-white-cabinet.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Open white cabinet
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/open-white-drawer.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Open white drawer
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/close-knob-drawer.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Close knob drawer
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/close-laptop.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Close laptop
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/close-microwave.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Close microwave
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/close-white-cabinet.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Close white cabinet
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/close-white-drawer.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Close white drawer
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/grasp-bottle.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Grasp bottle
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/grasp-funnel.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Grasp funnel
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/grasp-marker.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Grasp marker
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/grasp-shoe.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Grasp shoe
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/grasp-tape-measure.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Grasp tape measure
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/pap-bowl.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Pick and place bowl
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/pap-mug.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Pick and place mug
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/pap-tape.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Pick and place tape
+          </p>
+        </div>
+      </div>
+      <div class="column is-3" style="padding-left: 2px; padding-right: 2px;">
+        <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+          <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+            <source src="videos/pap-toy.mp4" type="video/mp4">
+          </video>
+          <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+            Pick and place toy
+          </p>
+        </div>
+      </div>
+  </div>
+
+    </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+
+<div class="rows is-centered ">
+  <div class="row is-full-width">
+      <h2 class="title is-3"><span class="dvima">Core Skill Generation In Simulation</span></h2>
+  </div>
+</div>
+<br>
+
+
+<p style="font-size: 125%">
+  Here we visualize the the diverse demonstrations we generated for the core skills in simulation.      
+  </p>
+  <br>
+  <br>
+
+<div class="columns is-centered">
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <img src="videos/open_diversity_20fps.gif" width="100%" style="border-radius: 5px;" alt="Open skill diversity">
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Diverse configurations for opening
+        </p>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <img src="videos/close_diversity_20fps.gif" width="100%" style="border-radius: 5px;" alt="Close skill diversity">
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Diverse configurations for closing
+        </p>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <img src="videos/grasp_diversity_10fps.gif" width="100%" style="border-radius: 5px;" alt="Grasp skill diversity">
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Diverse configurations for grasping
+        </p>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <img src="videos/pap_diversity_10fps.gif" width="100%" style="border-radius: 5px;" alt="Pick and place skill diversity">
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Diverse configurations for pick and place
+        </p>
+      </div>
+    </div>
+</div>
+<br>
+<div class="columns is-centered">
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+          <source src="videos/open.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Example demo of opening an articulated object
+        </p>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+          <source src="videos/close_laptop.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Example demo of closing an articulated object
+        </p>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+          <source src="videos/grasp_2.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Example demo of grasping an object in clutter
+        </p>
+      </div>
+    </div>
+    <div class="column is-3">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <video autoplay controls muted loop playsinline width="100%" style="border-radius: 5px;">
+          <source src="videos/pap.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; margin-top: 0.75rem; font-size: 110%; width: 100%;">
+          Example demo of pick and place an object
+        </p>
+      </div>
+    </div>
+</div>
+
+  </div>
+</section>
+
+      <!-- <section class="section">
+        <div class="container is-max-widescreen">
+            <div class="rows">
+                <div class="rows is-centered">
+                    <div class="row is-full-width">
+                        <h2 class="title is-3"><span class="dvima">Comparison to non-hierarchical policy</span></h2>
+                        <p style="font-size: 125%">
+                        We compare ArticuBot, which uses a hierarchical policy, to a non-hierarchical policy, that learns to output 
+                        eef end-effector delta transformations without conditioned on a learned predicted eef goal. 
+                        We compare in terms of the normalized opening performance, when trained with different number of objects in simulation. 
+                        As shown, using a hierarchical policy significantly outperforms the non-hierarchical policy.
+                        Increasing the number of training objects do not bring much improvement for the non-hierarchical policy. 
+                        </p>
+                        <br>
+                        <br>
+
+                        <div style="display: flex; justify-content: center;">
+                          <img src="assets/line_plot_hierarchical.png" alt="Example Image" style="max-width: 60%;">
+                      </div>
+  
+                      <p style="text-align:center; width: 100%;">Comparison of hierarchical and non-hierarchical policy.</p>
+                      <br>
+
+                        </p>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
 </html>
-EOF
